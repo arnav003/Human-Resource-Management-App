@@ -81,14 +81,18 @@ st.set_page_config(
 
 
 def run():
-    st.title("Human Resource Management")
+
+    col1, col2 = st.columns([1,6])
+    img = Image.open('Resources/Logo.png')
+    img = img.resize((75, 75))
+    col1.image(img)
+    col2.title("Human Resource Management")
+
     st.sidebar.markdown("# Choose User")
     activities = ["User", "Admin"]
     choice = st.sidebar.selectbox("Choose among the given options:", activities)
 
-    img = Image.open('Resources/Logo.png')
-    img = img.resize((250, 250))
-    st.image(img)
+
 
     # Create the DB
     db_sql = """CREATE DATABASE IF NOT EXISTS MY_DATABASE;"""
