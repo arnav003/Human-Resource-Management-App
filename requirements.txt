@@ -1,0 +1,10 @@
+pdfminer3
+pyresparser
+streamlit
+pandas
+plotly
+pymysql
+#Pillow
+nltk==3.8.1
+#pdfminer3
+spacy==3.6.0
