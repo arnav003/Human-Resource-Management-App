@@ -103,16 +103,13 @@ def run():
     DB_table_name = 'user_data'
     table_sql = "CREATE TABLE IF NOT EXISTS " + DB_table_name + """
                     (ID INT NOT NULL AUTO_INCREMENT,
-                     Name varchar(100) NOT NULL,
+                     Name VARCHAR(100) NOT NULL,
                      Email_ID VARCHAR(50) NOT NULL,
                      resume_score VARCHAR(8) NOT NULL,
                      Timestamp VARCHAR(50) NOT NULL,
                      Page_no VARCHAR(5) NOT NULL,
                      Predicted_Field VARCHAR(25) NOT NULL,
-                     User_level VARCHAR(30) NOT NULL,
-                     Actual_skills VARCHAR(300) NOT NULL,
-                     Recommended_skills VARCHAR(300) NOT NULL,
-                     Recommended_courses VARCHAR(600) NOT NULL,
+                     Skills VARCHAR(300) NOT NULL,
                      PRIMARY KEY (ID));
                     """
     cursor.execute(table_sql)
@@ -123,159 +120,162 @@ def run():
             with open(save_image_path, "wb") as f:
                 f.write(pdf_file.getbuffer())
             show_pdf(save_image_path)
-            resume_data = ResumeParser(save_image_path).get_extracted_data()
-            if resume_data:
-                resume_text = pdf_reader(save_image_path)
-
+            if st.button("Parse Data"):
+                resume_data = ResumeParser(save_image_path).get_extracted_data()
                 st.header("Hello " + resume_data['name'])
-                st.subheader("**Your Basic info**")
-                try:
-                    st.text('Name: ' + resume_data['name'])
-                    st.text('Email: ' + resume_data['email'])
-                    st.text('Contact: ' + resume_data['mobile_number'])
-                except:
-                    pass
 
-                st.subheader("**Skills Detected**")
-                st.markdown(resume_data['skills'])
-
-                ##  recommendation
-                ds_keyword = ['tensorflow', 'keras', 'pytorch', 'machine learning', 'deep Learning', 'flask',
-                              'streamlit']
-                web_keyword = ['react', 'django', 'node jS', 'react js', 'php', 'laravel', 'magento', 'wordpress',
-                               'javascript', 'angular js', 'c#', 'flask']
-                android_keyword = ['android', 'android development', 'flutter', 'kotlin', 'xml', 'kivy']
-                ios_keyword = ['ios', 'ios development', 'swift', 'cocoa', 'cocoa touch', 'xcode']
-                uiux_keyword = ['ux', 'adobe xd', 'figma', 'zeplin', 'balsamiq', 'ui', 'prototyping', 'wireframes',
-                                'storyframes', 'adobe photoshop', 'photoshop', 'editing', 'adobe illustrator',
-                                'illustrator', 'adobe after effects', 'after effects', 'adobe premier pro',
-                                'premier pro', 'adobe indesign', 'indesign', 'wireframe', 'solid', 'grasp',
-                                'user research', 'user experience']
-
-                reco_field = ''
-
-                for i in resume_data['skills']:
-                    ## Data science
-                    if i.lower() in ds_keyword:
-                        print(i.lower())
-                        reco_field = 'Data Science'
-                        st.success("** Our analysis says you are looking for Data Science Jobs.**")
-                        break
-
-                    ## Web development
-                    elif i.lower() in web_keyword:
-                        print(i.lower())
-                        reco_field = 'Web Development'
-                        st.success("** Our analysis says you are looking for Web Development Jobs **")
-                        break
-
-                    ## Android App Development
-                    elif i.lower() in android_keyword:
-                        print(i.lower())
-                        reco_field = 'Android Development'
-                        st.success("** Our analysis says you are looking for Android App Development Jobs **")
-                        break
-
-                    ## IOS App Development
-                    elif i.lower() in ios_keyword:
-                        print(i.lower())
-                        reco_field = 'IOS Development'
-                        st.success("** Our analysis says you are looking for IOS App Development Jobs **")
-                        break
-
-                    ## Ui-UX Recommendation
-                    elif i.lower() in uiux_keyword:
-                        print(i.lower())
-                        reco_field = 'UI-UX Development'
-                        st.success("** Our analysis says you are looking for UI-UX Development Jobs **")
-                        break
-
-                ## Insert into table
-                ts = time.time()
-                cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
-                cur_time = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
-                timestamp = str(cur_date + '_' + cur_time)
-
-                ### Resume recommendation
-                st.subheader("**Resume Recommendations**")
-                resume_score = 0
-                if 'Objective' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Objective</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add your career objective, it will give your career intension to the Recruiters.</h4>''',
-                        unsafe_allow_html=True)
-
-                if 'Declaration' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Delcaration✍/h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Declaration✍. It will give the assurance that everything written on your resume is true and fully acknowledged by you</h4>''',
-                        unsafe_allow_html=True)
-
-                if 'Hobbies' or 'Interests' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Hobbies⚽</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Hobbies⚽. It will show your persnality to the Recruiters and give the assurance that you are fit for this role or not.</h4>''',
-                        unsafe_allow_html=True)
-
-                if 'Achievements' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Achievements🏅 </h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Achievements🏅. It will show that you are capable for the required position.</h4>''',
-                        unsafe_allow_html=True)
-
-                if 'Projects' in resume_text:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Projects👨‍💻 </h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Projects👨‍💻. It will show that you have done work related the required position or not.</h4>''',
-                        unsafe_allow_html=True)
-
-                st.subheader("**Resume Score**")
-                st.markdown(
-                    """
-                    <style>
-                        .stProgress > div > div > div > div {
-                            background-color: #d73b5c;
-                        }
-                    </style>""",
-                    unsafe_allow_html=True,
-                )
-                my_bar = st.progress(0)
-                score = 0
-                for percent_complete in range(resume_score):
-                    score += 1
-                    time.sleep(0.1)
-                    my_bar.progress(percent_complete + 1)
-                st.success('** Your Resume Writing Score: ' + str(score) + '**')
-                st.warning(
-                    "** Note: This score is calculated based on the content that you have added in your Resume. **")
-
-                insert_data(resume_data['name'], resume_data['email'], str(resume_score), timestamp,
-                            str(resume_data['no_of_pages']), reco_field, str(resume_data['skills'])
-                            )
-
-                connection.commit()
-            else:
-                st.error('Something went wrong..')
+            # if resume_data:
+            #     resume_text = pdf_reader(save_image_path)
+            #
+            #     st.header("Hello " + resume_data['name'])
+            #     st.subheader("**Your Basic info**")
+            #     try:
+            #         st.text('Name: ' + resume_data['name'])
+            #         st.text('Email: ' + resume_data['email'])
+            #         st.text('Contact: ' + resume_data['mobile_number'])
+            #     except:
+            #         pass
+            #
+            #     st.subheader("**Skills Detected**")
+            #     st.markdown(resume_data['skills'])
+            #
+            #     ##  recommendation
+            #     ds_keyword = ['tensorflow', 'keras', 'pytorch', 'machine learning', 'deep Learning', 'flask',
+            #                   'streamlit']
+            #     web_keyword = ['react', 'django', 'node jS', 'react js', 'php', 'laravel', 'magento', 'wordpress',
+            #                    'javascript', 'angular js', 'c#', 'flask']
+            #     android_keyword = ['android', 'android development', 'flutter', 'kotlin', 'xml', 'kivy']
+            #     ios_keyword = ['ios', 'ios development', 'swift', 'cocoa', 'cocoa touch', 'xcode']
+            #     uiux_keyword = ['ux', 'adobe xd', 'figma', 'zeplin', 'balsamiq', 'ui', 'prototyping', 'wireframes',
+            #                     'storyframes', 'adobe photoshop', 'photoshop', 'editing', 'adobe illustrator',
+            #                     'illustrator', 'adobe after effects', 'after effects', 'adobe premier pro',
+            #                     'premier pro', 'adobe indesign', 'indesign', 'wireframe', 'solid', 'grasp',
+            #                     'user research', 'user experience']
+            #
+            #     reco_field = ''
+            #
+            #     for i in resume_data['skills']:
+            #         ## Data science
+            #         if i.lower() in ds_keyword:
+            #             print(i.lower())
+            #             reco_field = 'Data Science'
+            #             st.success("** Our analysis says you are looking for Data Science Jobs.**")
+            #             break
+            #
+            #         ## Web development
+            #         elif i.lower() in web_keyword:
+            #             print(i.lower())
+            #             reco_field = 'Web Development'
+            #             st.success("** Our analysis says you are looking for Web Development Jobs **")
+            #             break
+            #
+            #         ## Android App Development
+            #         elif i.lower() in android_keyword:
+            #             print(i.lower())
+            #             reco_field = 'Android Development'
+            #             st.success("** Our analysis says you are looking for Android App Development Jobs **")
+            #             break
+            #
+            #         ## IOS App Development
+            #         elif i.lower() in ios_keyword:
+            #             print(i.lower())
+            #             reco_field = 'IOS Development'
+            #             st.success("** Our analysis says you are looking for IOS App Development Jobs **")
+            #             break
+            #
+            #         ## Ui-UX Recommendation
+            #         elif i.lower() in uiux_keyword:
+            #             print(i.lower())
+            #             reco_field = 'UI-UX Development'
+            #             st.success("** Our analysis says you are looking for UI-UX Development Jobs **")
+            #             break
+            #
+            #     ## Insert into table
+            #     ts = time.time()
+            #     cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
+            #     cur_time = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
+            #     timestamp = str(cur_date + '_' + cur_time)
+            #
+            #     ### Resume recommendation
+            #     st.subheader("**Resume Recommendations**")
+            #     resume_score = 0
+            #     if 'Objective' in resume_text:
+            #         resume_score = resume_score + 20
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Objective</h4>''',
+            #             unsafe_allow_html=True)
+            #     else:
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add your career objective, it will give your career intension to the Recruiters.</h4>''',
+            #             unsafe_allow_html=True)
+            #
+            #     if 'Declaration' in resume_text:
+            #         resume_score = resume_score + 20
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added Delcaration✍/h4>''',
+            #             unsafe_allow_html=True)
+            #     else:
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Declaration✍. It will give the assurance that everything written on your resume is true and fully acknowledged by you</h4>''',
+            #             unsafe_allow_html=True)
+            #
+            #     if 'Hobbies' or 'Interests' in resume_text:
+            #         resume_score = resume_score + 20
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Hobbies⚽</h4>''',
+            #             unsafe_allow_html=True)
+            #     else:
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Hobbies⚽. It will show your persnality to the Recruiters and give the assurance that you are fit for this role or not.</h4>''',
+            #             unsafe_allow_html=True)
+            #
+            #     if 'Achievements' in resume_text:
+            #         resume_score = resume_score + 20
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Achievements🏅 </h4>''',
+            #             unsafe_allow_html=True)
+            #     else:
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Achievements🏅. It will show that you are capable for the required position.</h4>''',
+            #             unsafe_allow_html=True)
+            #
+            #     if 'Projects' in resume_text:
+            #         resume_score = resume_score + 20
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #1ed760;'>[+] Awesome! You have added your Projects👨‍💻 </h4>''',
+            #             unsafe_allow_html=True)
+            #     else:
+            #         st.markdown(
+            #             '''<h4 style='text-align: left; color: #fabc10;'>[-] According to our recommendation please add Projects👨‍💻. It will show that you have done work related the required position or not.</h4>''',
+            #             unsafe_allow_html=True)
+            #
+            #     st.subheader("**Resume Score**")
+            #     st.markdown(
+            #         """
+            #         <style>
+            #             .stProgress > div > div > div > div {
+            #                 background-color: #d73b5c;
+            #             }
+            #         </style>""",
+            #         unsafe_allow_html=True,
+            #     )
+            #     my_bar = st.progress(0)
+            #     score = 0
+            #     for percent_complete in range(resume_score):
+            #         score += 1
+            #         time.sleep(0.1)
+            #         my_bar.progress(percent_complete + 1)
+            #     st.success('** Your Resume Writing Score: ' + str(score) + '**')
+            #     st.warning(
+            #         "** Note: This score is calculated based on the content that you have added in your Resume. **")
+            #
+            #     insert_data(resume_data['name'], resume_data['email'], str(resume_score), timestamp,
+            #                 str(resume_data['no_of_pages']), reco_field, str(resume_data['skills'])
+            #                 )
+            #
+            #     connection.commit()
+            # else:
+            #     st.error('Something went wrong..')
     else:
         ## Admin Side
         st.success('Welcome to Admin Portal')

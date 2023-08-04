@@ -8,4 +8,5 @@ pymysql
 nltk==3.8.1
 #pdfminer3
 spacy==3.6.0
+spacy-transformers==1.3.0
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.6.0/en_core_web_sm-3.6.0-py3-none-any.whl
