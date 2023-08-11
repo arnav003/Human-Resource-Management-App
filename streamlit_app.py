@@ -7,9 +7,6 @@ import ResumeParser
 import pymysql
 from PIL import Image
 
-if 'admin_logged_in' not in st.session_state:
-    st.session_state['admin_logged_in'] = False
-
 
 @st.cache_resource
 def get_data(save_image_path):
@@ -51,10 +48,6 @@ def show_pdf(file_path):
         st.markdown(pdf_display, unsafe_allow_html=True)
 
 
-connection = pymysql.connect(host='localhost', user='root', password='12345678')
-cursor = connection.cursor()
-
-
 def insert_user_data(user_data_table, name, email, linkedin, phone, resume_score, timestamp, skills):
     insert_sql = "insert into " + user_data_table + """
     values (%s,%s,%s,%s,%s,%s,%s)"""
@@ -87,12 +80,6 @@ def get_listing_data(listing_data_table):
     listing_data = cursor.fetchall()
     listing_df = pd.DataFrame(listing_data, columns=['Job Description', 'Job Responsibilities', 'Job Skills'])
     return listing_df
-
-
-st.set_page_config(
-    page_title="Human Resource Management Portal",
-    page_icon='./Resources/Images/Logo.png',
-)
 
 
 def run():
@@ -290,5 +277,16 @@ def run():
                     insert_listing_data(listing_data_table, job_desc, job_res, job_skills)
                     cursor.execute(table_sql)
 
+
+if 'admin_logged_in' not in st.session_state:
+    st.session_state['admin_logged_in'] = False
+
+st.set_page_config(
+    page_title="Human Resource Management Portal",
+    page_icon='./Resources/Images/Logo.png',
+)
+
+connection = pymysql.connect(host='localhost', user='root', password='12345678')
+cursor = connection.cursor()
 
 run()
