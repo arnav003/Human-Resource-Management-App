@@ -7,7 +7,10 @@ import fitz
 
 def get_category(data, category):
     try:
-        return data[category]
+        value = data[category]
+        if not isinstance(value, list):
+            value = [value, ]
+        return value
     except:
         return None
 
@@ -16,7 +19,7 @@ def extract_email(text):
     email = re.findall(r"([^@|\s]+@[^@]+\.[^@|\s]+)", text)
     if email:
         try:
-            return email[0].split()[0].strip(';')
+            return [email[0].split()[0].strip(';'), ]
         except IndexError:
             return None
 
@@ -27,7 +30,7 @@ def extract_mobile_number(text):
     phone = re.findall(re.compile(mob_num_regex), text)
     if phone:
         number = ''.join(phone[0])
-        return number
+        return [number, ]
 
 
 def get_text_from_docx(doc_path):
@@ -76,7 +79,10 @@ def extract_data(text, model="Resources/Models/output/model-best"):
     parsed_data["years of experience"] = get_category(resume_data, "YEARS OF EXPERIENCE")
     parsed_data["language"] = get_category(resume_data, "LANGUAGE")
 
+    print(parsed_data)
+
     return parsed_data
+
 
 def job_desc(desc, model="Resources/Models/output/model-best"):
     nlp = spacy.load(model)
@@ -88,27 +94,27 @@ def job_desc(desc, model="Resources/Models/output/model-best"):
 # text = get_text_from_pdf(resume_file)
 # print(extract_data(text))
 
-job_desc(desc='''Description
-We are looking for a passionate iOS developer who can create an infrastructure for iOS app development and lead the whole process.
-They will have to collaborate with cross-functional teams of talented engineers to define, design, and develop new features for next-generation applications.
-Also, they will be responsible for designing and developing top-notch applications for the iOS platform, unit-testing code.
-Responsibilities
-Design and develop iOS compatible mobile applications
-Collaborate with the design team to define the best features
-Ensure quality and performance of the application
-Recognize potential obstacles and fix bottlenecks
-Identify and fix bugs before the final release
-Publish applications on App Store
-Write high-performing, scalable, reusable code
-Maintain the code and atomization of the application
-Design and implement updates and optimize apps
-Required Skills
-Bachelors degree in computer science or information technology
-At least 3 years of experience in iOS app development
-Strong knowledge of Objective-C, Swift, and Cocoa Touch
-Vast experience with multiple iOS frameworks
-Experience in continuous integration
-Knowledge of iOS back-end services
-Good understanding of iOS design principles and application interface guidelines
-Proficiency in code versioning tools
-''')
+# job_desc(desc='''Description
+# We are looking for a passionate iOS developer who can create an infrastructure for iOS app development and lead the whole process.
+# They will have to collaborate with cross-functional teams of talented engineers to define, design, and develop new features for next-generation applications.
+# Also, they will be responsible for designing and developing top-notch applications for the iOS platform, unit-testing code.
+# Responsibilities
+# Design and develop iOS compatible mobile applications
+# Collaborate with the design team to define the best features
+# Ensure quality and performance of the application
+# Recognize potential obstacles and fix bottlenecks
+# Identify and fix bugs before the final release
+# Publish applications on App Store
+# Write high-performing, scalable, reusable code
+# Maintain the code and atomization of the application
+# Design and implement updates and optimize apps
+# Required Skills
+# Bachelors degree in computer science or information technology
+# At least 3 years of experience in iOS app development
+# Strong knowledge of Objective-C, Swift, and Cocoa Touch
+# Vast experience with multiple iOS frameworks
+# Experience in continuous integration
+# Knowledge of iOS back-end services
+# Good understanding of iOS design principles and application interface guidelines
+# Proficiency in code versioning tools
+# ''')

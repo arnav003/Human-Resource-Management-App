@@ -18,6 +18,24 @@ def get_data(save_image_path):
     return data
 
 
+def print_list_with_text(ls, text, print_list=True):
+    out = ""
+    if print_list:
+        col1, col2 = st.columns([1, 5])
+        col1.write(f'{text}: ')
+    if ls is not None:
+        for ele in ls:
+            out = out + ele + "\n"
+            if print_list:
+                col2.text(ele)
+    else:
+        out = f"{text} not found."
+        if print_list:
+            col2.error(out)
+
+    return out
+
+
 def get_table_download_link(df, filename, text):
     csv = df.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()
@@ -45,13 +63,15 @@ def insert_user_data(user_data_table, name, email, linkedin, phone, resume_score
     cursor.execute(insert_sql, rec_values)
     connection.commit()
 
+
 def get_user_data(user_data_table):
     cursor.execute('SELECT * FROM ' + user_data_table)
     user_data = cursor.fetchall()
     user_df = pd.DataFrame(user_data, columns=['Name', 'Email', 'LinkedIn',
                                                'Phone', 'Resume Score', 'Timestamp',
                                                'Skills'])
-    return  user_df
+    return user_df
+
 
 def insert_listing_data(listing_data_table, job_desc, job_res, job_skills):
     insert_sql = "insert into " + listing_data_table + """
@@ -66,7 +86,8 @@ def get_listing_data(listing_data_table):
     cursor.execute('SELECT * FROM ' + listing_data_table)
     listing_data = cursor.fetchall()
     listing_df = pd.DataFrame(listing_data, columns=['Job Description', 'Job Responsibilities', 'Job Skills'])
-    return  listing_df
+    return listing_df
+
 
 st.set_page_config(
     page_title="Human Resource Management Portal",
@@ -85,66 +106,57 @@ def run():
     activities = ["User", "Admin"]
     choice = st.sidebar.selectbox("Choose among the given options:", activities)
 
-
     db = "HRM_DATABASE"
     db_sql = """CREATE DATABASE IF NOT EXISTS """ + db + ';'
     cursor.execute(db_sql)
     connection.select_db(db)
 
-
     user_data_table = 'user_data'
-    table_sql = "CREATE TABLE IF NOT EXISTS " + user_data_table + """
-                    (Name VARCHAR(100) NOT NULL,
-                     Email VARCHAR(50) NOT NULL,
-                     LinkedIn VARCHAR(50) NOT NULL,
-                     Contact VARCHAR(15) NOT NULL,
-                     Resume_Score VARCHAR(8) NOT NULL,
-                     Timestamp VARCHAR(50) NOT NULL,
-                     Skills VARCHAR(300) NOT NULL);
-                    """
-    cursor.execute(table_sql)
+    # table_sql = "CREATE TABLE IF NOT EXISTS " + user_data_table + """
+    #                 (Timestamp VARCHAR(50) NOT NULL,
+    #                 Name VARCHAR(100) NOT NULL,
+    #                  Email VARCHAR(50) NOT NULL,
+    #                  LinkedIn VARCHAR(50) NOT NULL,
+    #                  Contact VARCHAR(15) NOT NULL,
+    #                  Skills VARCHAR(300) NOT NULL
+    #                  Resume_Score VARCHAR(8) NOT NULL);
+    #                 """
+    # cursor.execute(table_sql)
     if choice == 'User':
         pdf_file = st.file_uploader("Choose your Resume", type=["pdf"])
         if pdf_file is not None:
             save_image_path = './Uploaded Resumes/' + pdf_file.name
             with open(save_image_path, "wb") as f:
                 f.write(pdf_file.getbuffer())
-            show_pdf(save_image_path)
             resume_data = get_data(save_image_path)
 
             if resume_data:
-                name = resume_data['name'][0]
-                email = resume_data['email'] if resume_data['email'] is not None else "Not found"
-                phone = resume_data['phone number'] if resume_data['phone number'] is not None else "Not found"
-                linkedin = resume_data['linkedin'][0] if resume_data['linkedin'] is not None else "Not found"
+                st.header("Hello, " + print_list_with_text(resume_data['name'], "Name", print_list=False))
 
-                st.header("Hello, " + name)
+                show_pdf(save_image_path)
 
-                st.text('Email: ' + email)
-                st.text('Contact: ' + phone)
-                st.text('LinkedIn: ' + linkedin)
-
-                st.subheader("**Skills Detected**")
-                skills = ""
-                if resume_data['skills'] is not None:
-                    for skill in resume_data['skills']:
-                        cleaned_skill = ""
-                        for char in skill:
-                            if char.isalpha():
-                                cleaned_skill += char
-                            else:
-                                cleaned_skill += " "
-                        skills = skills + cleaned_skill + ", "
-                        st.text(cleaned_skill)
-                else:
-                    st.warning("Skills not found.")
-
+                with st.expander("Extracted Details"):
+                    name = print_list_with_text(resume_data['name'], "Name")
+                    email = print_list_with_text(resume_data['email'], "Email")
+                    phone = print_list_with_text(resume_data['phone number'], "Phone Number")
+                    linkedin = print_list_with_text(resume_data['linkedin'], "LinkedIn")
+                    skills = print_list_with_text(resume_data["skills"], "Skills")
+                    degree = print_list_with_text(resume_data["degree"], "Degree")
+                    year_of_graduation = print_list_with_text(resume_data["year of graduation"], "Year of Graduation")
+                    university = print_list_with_text(resume_data["university"], "University")
+                    certification = print_list_with_text(resume_data["certification"], "Certification")
+                    awards = print_list_with_text(resume_data["awards"], "Awards")
+                    worked_as = print_list_with_text(resume_data["worked as"], "Worked As")
+                    companies_worked_at = print_list_with_text(resume_data["companies worked at"],
+                                                               "Companies Worked At")
+                    years_of_experience = print_list_with_text(resume_data["years of experience"],
+                                                               "Years of Experience")
+                    language = print_list_with_text(resume_data["language"], "Language")
 
                 ts = time.time()
                 cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
                 cur_time = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
                 timestamp = str(cur_date + '_' + cur_time)
-
 
                 st.subheader("**Resume Analysis**")
                 resume_score = 0
