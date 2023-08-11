@@ -26,9 +26,9 @@ def print_list_with_text(ls, text, print_list=True):
             if print_list:
                 col2.text(ele)
     else:
-        out = f"{text} not found."
+        out = "Not found."
         if print_list:
-            col2.error(out)
+            col2.error(f"{text} not found.")
 
     return out
 
@@ -52,14 +52,17 @@ def insert_user_data(user_data_table, name, email, linkedin, phone, resume_score
     insert_sql = "insert into " + user_data_table + """
     values (%s,%s,%s,%s,%s,%s,%s)"""
     rec_values = (name, email, linkedin, phone, resume_score, timestamp, skills)
-
+    
     cursor.execute(insert_sql, rec_values)
     connection.commit()
+    # conn.query(insert_sql % rec_values)
 
 
 def get_user_data(user_data_table):
     cursor.execute('SELECT * FROM ' + user_data_table)
     user_data = cursor.fetchall()
+    # user_data = conn.query('SELECT * FROM ' + user_data_table)
+
     user_df = pd.DataFrame(user_data, columns=['Name', 'Email', 'LinkedIn',
                                                'Phone', 'Resume Score', 'Timestamp',
                                                'Skills'])
@@ -73,11 +76,13 @@ def insert_listing_data(listing_data_table, job_desc, job_res, job_skills):
 
     cursor.execute(insert_sql, rec_values)
     connection.commit()
+    # conn.query(insert_sql % rec_values)
 
 
 def get_listing_data(listing_data_table):
     cursor.execute('SELECT * FROM ' + listing_data_table)
     listing_data = cursor.fetchall()
+    # listing_data = conn.query('SELECT * FROM ' + listing_data_table)
     listing_df = pd.DataFrame(listing_data, columns=['Job Description', 'Job Responsibilities', 'Job Skills'])
     return listing_df
 
@@ -96,7 +101,9 @@ def run():
     db = "HRM_DATABASE"
     db_sql = """CREATE DATABASE IF NOT EXISTS """ + db + ';'
     cursor.execute(db_sql)
+    # conn.query(db_sql)
     connection.select_db(db)
+    # conn.query('''USE ''' + db)
 
     user_data_table = 'user_data'
     # table_sql = "CREATE TABLE IF NOT EXISTS " + user_data_table + """
@@ -260,6 +267,7 @@ def run():
                                                  Job_Skills VARCHAR(250) NOT NULL);
                                                 """
             cursor.execute(table_sql)
+            # conn.query(table_sql)
 
             st.header("Listing Data")
             listing_data_df = get_listing_data(listing_data_table)
@@ -275,7 +283,7 @@ def run():
 
                 if st.button('Add listing'):
                     insert_listing_data(listing_data_table, job_desc, job_res, job_skills)
-                    cursor.execute(table_sql)
+                    # cursor.execute(table_sql)
 
 
 if 'admin_logged_in' not in st.session_state:
@@ -286,7 +294,10 @@ st.set_page_config(
     page_icon='./Resources/Images/Logo.png',
 )
 
-connection = pymysql.connect(host='localhost', user='root', password='12345678')
+# connection = pymysql.connect(host='localhost', user='root', password='12345678')
+connection = pymysql.connect(host=st.secrets.connections.mysql.host, user=st.secrets.connections.mysql.username, password=st.secrets.connections.mysql.password)
 cursor = connection.cursor()
+
+# conn = st.experimental_connection('mysql', type='sql')
 
 run()
