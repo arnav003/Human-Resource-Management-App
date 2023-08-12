@@ -21,6 +21,3 @@ Experience in continuous integration
 Knowledge of iOS back-end services
 Good understanding of iOS design principles and application interface guidelines
 Proficiency in code versioning tools
-
-
-

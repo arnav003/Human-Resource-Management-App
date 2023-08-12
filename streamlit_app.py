@@ -52,7 +52,7 @@ def insert_user_data(user_data_table, name, email, linkedin, phone, resume_score
     insert_sql = "insert into " + user_data_table + """
     values (%s,%s,%s,%s,%s,%s,%s)"""
     rec_values = (name, email, linkedin, phone, resume_score, timestamp, skills)
-    
+
     cursor.execute(insert_sql, rec_values)
     connection.commit()
     # conn.query(insert_sql % rec_values)

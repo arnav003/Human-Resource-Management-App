@@ -84,37 +84,27 @@ def extract_data(text, model="Resources/Models/output/model-best"):
     return parsed_data
 
 
-def job_desc(desc, model="Resources/Models/output/model-best"):
+def parse_job_desc(desc, model="Resources/Models/output/model-best"):
     nlp = spacy.load(model)
     doc = nlp(desc)
 
-    print(doc)
+    for ent in doc.ents:
+        print(ent.text + " -> " + ent.label_)
+
 
 # resume_file = 'Resources/Sample Resumes/IOS1.pdf'
 # text = get_text_from_pdf(resume_file)
 # print(extract_data(text))
 
-# job_desc(desc='''Description
-# We are looking for a passionate iOS developer who can create an infrastructure for iOS app development and lead the whole process.
-# They will have to collaborate with cross-functional teams of talented engineers to define, design, and develop new features for next-generation applications.
-# Also, they will be responsible for designing and developing top-notch applications for the iOS platform, unit-testing code.
-# Responsibilities
-# Design and develop iOS compatible mobile applications
-# Collaborate with the design team to define the best features
-# Ensure quality and performance of the application
-# Recognize potential obstacles and fix bottlenecks
-# Identify and fix bugs before the final release
-# Publish applications on App Store
-# Write high-performing, scalable, reusable code
-# Maintain the code and atomization of the application
-# Design and implement updates and optimize apps
-# Required Skills
-# Bachelors degree in computer science or information technology
-# At least 3 years of experience in iOS app development
-# Strong knowledge of Objective-C, Swift, and Cocoa Touch
-# Vast experience with multiple iOS frameworks
-# Experience in continuous integration
-# Knowledge of iOS back-end services
-# Good understanding of iOS design principles and application interface guidelines
-# Proficiency in code versioning tools
-# ''')
+# test_str = "My name is Arnav. I am studying B.Tech Computer Science Engineering at Manipal University Jaipur."
+# parse_job_desc(desc=test_str, model="en_core_web_sm")
+
+file = open('job_desc.txt', 'r')
+desc = file.read()
+file.close()
+
+parse_job_desc(desc=desc)
+
+# file = open("resume_text.txt", 'w')
+# file.write(text)
+# file.close()
