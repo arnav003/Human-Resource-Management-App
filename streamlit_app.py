@@ -11,7 +11,7 @@ from PIL import Image
 @st.cache_resource
 def get_data(save_image_path):
     text = ResumeParser.get_text_from_pdf(save_image_path)
-    data = ResumeParser.extract_data(text)
+    data, _ = ResumeParser.extract_data(text)
     return data
 
 
@@ -98,24 +98,8 @@ def run():
     activities = ["User", "Admin"]
     choice = st.sidebar.selectbox("Choose among the given options:", activities)
 
-    db = "HRM_DATABASE"
-    db_sql = """CREATE DATABASE IF NOT EXISTS """ + db + ';'
-    cursor.execute(db_sql)
-    # conn.query(db_sql)
-    connection.select_db(db)
-    # conn.query('''USE ''' + db)
+    user_data_table = st.secrets.connections.mysql.user_data
 
-    user_data_table = 'user_data'
-    # table_sql = "CREATE TABLE IF NOT EXISTS " + user_data_table + """
-    #                 (Timestamp VARCHAR(50) NOT NULL,
-    #                 Name VARCHAR(100) NOT NULL,
-    #                  Email VARCHAR(50) NOT NULL,
-    #                  LinkedIn VARCHAR(50) NOT NULL,
-    #                  Contact VARCHAR(15) NOT NULL,
-    #                  Skills VARCHAR(300) NOT NULL
-    #                  Resume_Score VARCHAR(8) NOT NULL);
-    #                 """
-    # cursor.execute(table_sql)
     if choice == 'User':
         pdf_file = st.file_uploader("Choose your Resume", type=["pdf"])
         if pdf_file is not None:
@@ -281,9 +265,8 @@ def run():
                 job_res = st.text_input("Job Responsibilities")
                 job_skills = st.text_input("Job Skills")
 
-                if st.button('Add listing'):
-                    insert_listing_data(listing_data_table, job_desc, job_res, job_skills)
-                    # cursor.execute(table_sql)
+            if st.button('Add listing'):
+                insert_listing_data(listing_data_table, job_desc, job_res, job_skills)
 
 
 if 'admin_logged_in' not in st.session_state:
@@ -294,10 +277,10 @@ st.set_page_config(
     page_icon='./Resources/Images/Logo.png',
 )
 
-# connection = pymysql.connect(host='localhost', user='root', password='12345678')
-connection = pymysql.connect(host=st.secrets.connections.mysql.host, user=st.secrets.connections.mysql.username, password=st.secrets.connections.mysql.password)
+connection = pymysql.connect(host=st.secrets.connections.mysql.host,
+                             user=st.secrets.connections.mysql.username,
+                             password=st.secrets.connections.mysql.password,
+                             database=st.secrets.connections.mysql.database)
 cursor = connection.cursor()
-
-# conn = st.experimental_connection('mysql', type='sql')
 
 run()
