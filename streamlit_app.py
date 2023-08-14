@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import database as db
 import base64
 import time
 import datetime
@@ -46,45 +47,6 @@ def show_pdf(file_path):
     pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
     with st.expander("Show CV"):
         st.markdown(pdf_display, unsafe_allow_html=True)
-
-
-def insert_user_data(user_data_table, name, email, linkedin, phone, resume_score, timestamp, skills):
-    insert_sql = "insert into " + user_data_table + """
-    values (%s,%s,%s,%s,%s,%s,%s)"""
-    rec_values = (name, email, linkedin, phone, resume_score, timestamp, skills)
-
-    cursor.execute(insert_sql, rec_values)
-    connection.commit()
-    # conn.query(insert_sql % rec_values)
-
-
-def get_user_data(user_data_table):
-    cursor.execute('SELECT * FROM ' + user_data_table)
-    user_data = cursor.fetchall()
-    # user_data = conn.query('SELECT * FROM ' + user_data_table)
-
-    user_df = pd.DataFrame(user_data, columns=['Name', 'Email', 'LinkedIn',
-                                               'Phone', 'Resume Score', 'Timestamp',
-                                               'Skills'])
-    return user_df
-
-
-def insert_listing_data(listing_data_table, job_desc, job_res, job_skills):
-    insert_sql = "insert into " + listing_data_table + """
-        values (%s,%s,%s)"""
-    rec_values = (job_desc, job_res, job_skills)
-
-    cursor.execute(insert_sql, rec_values)
-    connection.commit()
-    # conn.query(insert_sql % rec_values)
-
-
-def get_listing_data(listing_data_table):
-    cursor.execute('SELECT * FROM ' + listing_data_table)
-    listing_data = cursor.fetchall()
-    # listing_data = conn.query('SELECT * FROM ' + listing_data_table)
-    listing_df = pd.DataFrame(listing_data, columns=['Job Description', 'Job Responsibilities', 'Job Skills'])
-    return listing_df
 
 
 def run():
@@ -217,7 +179,7 @@ def run():
                     my_bar.progress(percent_complete + 1)
                 st.success('**Your Resume Score: ' + str(score) + '**')
 
-                insert_user_data(user_data_table, name, email, linkedin, phone, str(resume_score), timestamp, skills)
+                db.insert_user_data(user_data_table, name, email, linkedin, phone, str(resume_score), timestamp, skills)
 
                 connection.commit()
             else:
@@ -238,23 +200,16 @@ def run():
             st.success("Welcome Admin")
 
             st.header("User Data")
-            user_data_df = get_user_data(user_data_table)
+            user_data_df = db.get_user_data(user_data_table)
             st.dataframe(user_data_df)
 
             st.markdown(get_table_download_link(user_data_df, "user_data.csv", "Download User Data"),
                         unsafe_allow_html=True)
 
-            listing_data_table = 'listing_data'
-            table_sql = "CREATE TABLE IF NOT EXISTS " + listing_data_table + """
-                                                (Job_Description VARCHAR(250) NOT NULL,
-                                                 Job_Responsibilities VARCHAR(250) NOT NULL,
-                                                 Job_Skills VARCHAR(250) NOT NULL);
-                                                """
-            cursor.execute(table_sql)
-            # conn.query(table_sql)
+            listing_data_table = st.secrets.connections.mysql.listing_table
 
             st.header("Listing Data")
-            listing_data_df = get_listing_data(listing_data_table)
+            listing_data_df = db.get_listing_data(listing_data_table)
             st.dataframe(listing_data_df)
 
             st.markdown(get_table_download_link(listing_data_df, "listing_data.csv", "Download Listing Data"),
@@ -266,7 +221,7 @@ def run():
                 job_skills = st.text_input("Job Skills")
 
             if st.button('Add listing'):
-                insert_listing_data(listing_data_table, job_desc, job_res, job_skills)
+                db.insert_listing_data(listing_data_table, job_desc, job_res, job_skills)
 
 
 if 'admin_logged_in' not in st.session_state:
@@ -277,10 +232,6 @@ st.set_page_config(
     page_icon='./Resources/Images/Logo.png',
 )
 
-connection = pymysql.connect(host=st.secrets.connections.mysql.host,
-                             user=st.secrets.connections.mysql.username,
-                             password=st.secrets.connections.mysql.password,
-                             database=st.secrets.connections.mysql.database)
-cursor = connection.cursor()
+connection, cursor = db.set_connection()
 
 run()
