@@ -224,8 +224,6 @@ if 'admin_logged_in' not in st.session_state:
     st.session_state['admin_logged_in'] = False
 if 'connection_object' not in st.session_state:
     st.session_state['connection_object'] = None
-if 'cursor_object' not in st.session_state:
-    st.session_state['cursor_object'] = None
 
 st.set_page_config(
     page_title="Human Resource Management Portal",
@@ -233,13 +231,11 @@ st.set_page_config(
 )
 
 if st.session_state['connection_object'] is None:
-    connection, cursor = db.set_connection()
-    st.session_state['connection_object'] = connection
-    st.session_state['cursor_object'] = cursor
-elif not st.session_state['connection_object'].open:
-    connection, cursor = db.set_connection()
-    st.session_state['connection_object'] = connection
-    st.session_state['cursor_object'] = cursor
+    connection = db.set_connection()
+
+if not db.check_connection():
+    connection = db.set_connection()
+cursor = db.set_cursor()
 
 # db.set_database()
 # db.create_database()
