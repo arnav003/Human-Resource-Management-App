@@ -93,14 +93,11 @@ def extract_data(text, model="Resources/Models/output/model-best"):
 
 
 def parse_job_desc(desc, model="Resources/Models/output/model-best"):
-    nlp = spacy.load("en_core_web_sm")
+    nlp = spacy.load(model)
     doc = nlp(desc)
 
-    # nlp = spacy.load(model)
-    # doc = nlp(desc)
-
-    for ent in doc.ents:
-        print(ent.text + " -> " + ent.label_)
+    # for ent in doc.ents:
+    #     print(ent.text + " -> " + ent.label_)
 
 
 # resume_file = 'Resources/Sample Resumes/IOS1.pdf'
