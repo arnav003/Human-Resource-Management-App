@@ -54,7 +54,7 @@ def get_text_from_pdf(file_path):
     return text
 
 
-def extract_data(text, model="Resources/Models/output/model-best"):
+def extract_data(text, model="./Resources/Models/output/model-best"):
     nlp = spacy.load(model)
     doc = nlp(text)
 
@@ -92,7 +92,7 @@ def extract_data(text, model="Resources/Models/output/model-best"):
     return data_dict, data_str
 
 
-def parse_job_desc(desc, model="Resources/Models/output/model-best"):
+def parse_job_desc(desc, model="./Resources/Models/output/model-best"):
     nlp = spacy.load(model)
     doc = nlp(desc)
 

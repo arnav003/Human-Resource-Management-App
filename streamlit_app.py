@@ -48,10 +48,8 @@ def show_pdf(file_path):
 
 
 def run():
-    # path_prefix = '/mount/src/human-resource-management-app/'
-
     col1, col2 = st.columns([1, 6])
-    img = Image.open('Resources/Images/Logo.png')
+    img = Image.open('./Resources/Images/Logo.png')
     img = img.resize((75, 75))
     col1.image(img)
     col2.title("Human Resource Management")
@@ -65,7 +63,7 @@ def run():
     if choice == 'User':
         pdf_file = st.file_uploader("Choose your Resume", type=["pdf"])
         if pdf_file is not None:
-            save_image_path = 'Uploaded Resumes/' + pdf_file.name
+            save_image_path = "./Uploaded Resumes/" + pdf_file.name
             with open(save_image_path, "wb") as f:
                 f.write(pdf_file.getbuffer())
             resume_data = get_data(save_image_path)
