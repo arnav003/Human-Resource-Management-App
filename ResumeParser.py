@@ -49,9 +49,9 @@ def get_text_from_pdf(file_path):
     for page in doc:
         text = text + str(page.get_text())
 
-    file = open('resume_text.txt', 'w')
-    file.write(text)
-    file.close()
+    # file = open('resume_text.txt', 'w')
+    # file.write(text)
+    # file.close()
 
     return text
 
@@ -87,50 +87,22 @@ def extract_data(text, model="Resources/Models/output/model-best"):
     data_dict["language"] = get_category(resume_data, "LANGUAGE")
 
     # print(data_dict)
-    file = open('resume_data.txt', 'w')
-    file.write(data_str)
-    file.close()
-
-    # print(get_category(resume_data, "SKILLS"))
-    #
-    # nlp = spacy.load('en_core_web_sm')
-    # doc = nlp(text)
-    # print(extract_skills(doc, doc.noun_chunks))
+    # file = open('resume_data.txt', 'w')
+    # file.write(data_str)
+    # file.close()
 
     return data_dict, data_str
 
 
-def extract_skills(nlp_text, noun_chunks):
-    tokens = [token.text for token in nlp_text if not token.is_stop]
-    data = pd.read_csv("Resources/skills.csv")
-    skills = list(data.columns.values)
-    skillset = []
-    for token in tokens:
-        if token.lower() in skills:
-            skillset.append(token)
-    for token in noun_chunks:
-        token = token.text.lower().strip()
-        if token in skills:
-            skillset.append(token)
-    return [i.capitalize() for i in set([i.lower() for i in skillset])]
-
-
 def parse_job_desc(desc, model="Resources/Models/output/model-best"):
-
     nlp = spacy.load("en_core_web_sm")
     doc = nlp(desc)
-    job_skills = set([
-        skill.lower() for skill in extract_skills(doc, doc.noun_chunks)
-    ])
-    job_skill_count = len(job_skills)
-
-    print()
 
     # nlp = spacy.load(model)
     # doc = nlp(desc)
-    #
-    # for ent in doc.ents:
-    #     print(ent.text + " -> " + ent.label_)
+
+    for ent in doc.ents:
+        print(ent.text + " -> " + ent.label_)
 
 
 # resume_file = 'Resources/Sample Resumes/IOS1.pdf'

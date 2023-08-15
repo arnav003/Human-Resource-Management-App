@@ -1,92 +1,105 @@
- VAISHALI BIJOY 
-VAISHALI.BIJOY2016@vitstudent.ac.in 
-8511192673 
-Education 
-St. Patrick’s Junior College Agra, 97% , High School 
-St. Patrick’s Juinor College Agra, 95% Secondary SchooL 
-Date of birth 
-12 May 1998 
- 
-Languages known 
-Hindi, English, Spanish 
- 
-Coursework 
-Machine Learning 
-Data Visualization 
-Data structures and algorithms  
-Statistics 
-Operating Systems 
-Database Management System 
-Discrete maths 
- 
- 
-Skills 
-C++ 
- 
- 
- 
- 
- 
- 
- 
-Java 
-Python  
- 
- 
- 
- 
- 
- 
-Arduino 
-Android 
- 
- 
- 
- 
- 
- 
-               HTML 
-PHP 
- 
- 
- 
- 
- 
- 
- 
-Javascript 
-MySQL  
- 
- 
- 
- 
- 
- 
-R studio 
- 
- 
-Experience 
-• Android club coordinator 
-• Front end developer in TechnoVIT website team 
-• Online event coordinator in TechnoVIT 
- 
- 
-Projects 
-Good for females 
-An android application for women and health safety, emergency mode using android 
-modules, safest route using image processing, disease prediction using SVM and linear 
-regression. 
- 
-Face detection and recognition using openMP 
-OpenCV, openMP, cuda 
- 
-Smart Farming 
-Arduino coding, sensors , thingspeak 
- 
- 
- 
-Co-curricular activities 
-Reading novels, painting  
- 
- 
- 
+ info@resumekraft.com
++1-202-555-0135
+New York, US
+linkedin.com/in/sam
+Swift,Objective -c
+Tools: XCode
+FrameWorks: Cccoa Touch
+Data Storage:
+Sqlite,Plist,NSUserDefaults
+ParsingTechniques:XML,JSON
+WebServices: REST, SOAP
+Skills
+New York University of
+Technology
+Aug 2013 - Nov 2017
+Computer Science Engineering
+with aggregate of 6.3%
+The Texas Modal School
+Jun 2011 - May 2013
+Higher Secondary Education
+with an aggregate of 78%
+Education
+English
+German
+French
+Chines
+Languages
+CCNA (Essentials)
+CCNA (Switching & Routing)
+Certifications
+  4.7 years of experience in developing applications on IOS
+  Work experience in swift programming
+  Decent knowledge MVC Architecture
+  Experience in using SOAP, REST-based Web Services 
+  Good knowledge on push notification integration
+  Experience in App submission to the app store
+  Excellent communication skills 
+  Passionate to secure a challenging position in a reputable
+organization to expand my learnings, knowledge, and skills.
+Summary
+Edu-Tech Solutions LLC Jul 2017 - Present
+iOS Developer
+As a Developer i am responsible in 
+Gathering the requirments
+Create UIDesigns  screens
+Total end-end  development and
+Uploading the app to AppStore
+Experience
+Developer
+NY Model School IOS App
+Project Details:
+Project Name: NY Model School
+Client: NY Model International Public School
+Role: Developer
+Organization: My Class Board Educational Solutions
+Tools: XCode
+Technologies: IOS -10,Swift
+Project Description: 
+This application is developed to constantly update parents about their
+child school activities also build a parent-teacher association. They can
+check grades, attendance status, assignments, and more. Parents will
+constantly receive alerts regarding the latest announcements,
+pictures, etc. parents will be kept updated with everything that is
+happening at NY Model International Public School
+Developer
+Silver Tune IOS App
+ Project Details:
+Project Name: Silver Tune
+Client: Silver Tune
+Role: Developer
+Organization: My Class Board Educational Solutions
+Tools: XCode
+Technologies: IOS -10 swift
+Projects
+Samantha Ru
+I O S  D E V E L O P E R
+Project Name: Silver Tune
+Client: Silver Tune
+Role: Developer
+Organization: My Class Board Educational Solutions
+Tools: XCode
+Technologies: IOS -10, swift
+Project Description:
+This application is developed to constantly update parents about their
+child school activities also build a parent-teacher association. They can
+check grades, attendance status, assignments, and more. Parents will
+constantly receive alerts regarding the latest announcements,
+pictures, etc. parents will be kept updated with everything that is
+happening at Silver Tune
+Developer
+Bring-up International school
+Project Details:
+Project Name: Bring-up International school
+Client: Bring-up International school
+Role: Developer
+Organization: My Class Board Educational Solutions
+Tools: XCode
+Technologies: IOS -10, swift 
+Project Description:
+This application is developed to constantly update parents about their
+child school activities also build a parent-teacher association. They can
+check grades, attendance status, assignments, and more. Parents will
+constantly receive alerts regarding the latest announcements,
+pictures, etc. parents will be kept updated with everything that is
+happening at Bring-up
