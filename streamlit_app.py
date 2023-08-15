@@ -1,11 +1,9 @@
 import streamlit as st
-import pandas as pd
 import database as db
 import base64
 import time
 import datetime
 import ResumeParser
-import pymysql
 from PIL import Image
 
 

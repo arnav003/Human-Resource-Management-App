@@ -1,9 +1,7 @@
 import re
 import docx2txt
 import spacy
-from spacy.matcher import Matcher
 import fitz
-import pandas as pd
 
 
 def get_category(data, category):
