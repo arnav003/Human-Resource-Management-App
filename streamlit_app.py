@@ -179,9 +179,7 @@ def run():
                     my_bar.progress(percent_complete + 1)
                 st.success('**Your Resume Score: ' + str(score) + '**')
 
-                db.insert_user_data(user_data_table, name, email, linkedin, phone, str(resume_score), timestamp, skills)
-
-                connection.commit()
+                db.insert_user_data(user_data_table, timestamp, name, email, linkedin, phone, skills, str(resume_score))
             else:
                 st.error('Something went wrong..')
     else:
@@ -226,12 +224,28 @@ def run():
 
 if 'admin_logged_in' not in st.session_state:
     st.session_state['admin_logged_in'] = False
+if 'connection_object' not in st.session_state:
+    st.session_state['connection_object'] = None
+if 'cursor_object' not in st.session_state:
+    st.session_state['cursor_object'] = None
 
 st.set_page_config(
     page_title="Human Resource Management Portal",
     page_icon='./Resources/Images/Logo.png',
 )
 
-connection, cursor = db.set_connection()
+if st.session_state['connection_object'] is None:
+    connection, cursor = db.set_connection()
+    st.session_state['connection_object'] = connection
+    st.session_state['cursor_object'] = cursor
+elif not st.session_state['connection_object'].open:
+    connection, cursor = db.set_connection()
+    st.session_state['connection_object'] = connection
+    st.session_state['cursor_object'] = cursor
+
+# db.set_database()
+# db.create_database()
+# db.create_user_data_table()
+# db.create_listing_data_table()
 
 run()

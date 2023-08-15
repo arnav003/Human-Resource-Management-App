@@ -3,6 +3,7 @@ import docx2txt
 import spacy
 from spacy.matcher import Matcher
 import fitz
+import pandas as pd
 
 
 def get_category(data, category):
@@ -90,20 +91,51 @@ def extract_data(text, model="Resources/Models/output/model-best"):
     file.write(data_str)
     file.close()
 
+    # print(get_category(resume_data, "SKILLS"))
+    #
+    # nlp = spacy.load('en_core_web_sm')
+    # doc = nlp(text)
+    # print(extract_skills(doc, doc.noun_chunks))
+
     return data_dict, data_str
 
 
+def extract_skills(nlp_text, noun_chunks):
+    tokens = [token.text for token in nlp_text if not token.is_stop]
+    data = pd.read_csv("Resources/skills.csv")
+    skills = list(data.columns.values)
+    skillset = []
+    for token in tokens:
+        if token.lower() in skills:
+            skillset.append(token)
+    for token in noun_chunks:
+        token = token.text.lower().strip()
+        if token in skills:
+            skillset.append(token)
+    return [i.capitalize() for i in set([i.lower() for i in skillset])]
+
+
 def parse_job_desc(desc, model="Resources/Models/output/model-best"):
-    nlp = spacy.load(model)
+
+    nlp = spacy.load("en_core_web_sm")
     doc = nlp(desc)
+    job_skills = set([
+        skill.lower() for skill in extract_skills(doc, doc.noun_chunks)
+    ])
+    job_skill_count = len(job_skills)
 
-    for ent in doc.ents:
-        print(ent.text + " -> " + ent.label_)
+    print()
+
+    # nlp = spacy.load(model)
+    # doc = nlp(desc)
+    #
+    # for ent in doc.ents:
+    #     print(ent.text + " -> " + ent.label_)
 
 
-resume_file = 'Resources/Sample Resumes/IOS1.pdf'
-text = get_text_from_pdf(resume_file)
-data_dict, data_str = extract_data(text)
+# resume_file = 'Resources/Sample Resumes/IOS1.pdf'
+# text = get_text_from_pdf(resume_file)
+# data_dict, data_str = extract_data(text)
 
 # file = open('job_desc.txt', 'r')
 # desc = file.read()
