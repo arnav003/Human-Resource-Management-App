@@ -49,10 +49,10 @@ def show_pdf(file_path):
 
 def run():
     col1, col2 = st.sidebar.columns([1, 3])
-    img = Image.open('./Resources/Images/Logo.png')
-    img = img.resize((75, 75))
+    img = Image.open('./Resources/Images/Logo_3.png')
+    img = img.resize((100, 75))
     col1.image(img)
-    col2.markdown("# Recruit Rank")
+    col2.markdown("# Recruit Ranker")
 
     st.sidebar.markdown("# Choose User")
     activities = ["User", "Admin"]
@@ -226,8 +226,8 @@ if 'connection_object' not in st.session_state:
     st.session_state['connection_object'] = None
 
 st.set_page_config(
-    page_title="Recruit Rank",
-    page_icon='./Resources/Images/Logo.png',
+    page_title="Recruit Ranker",
+    page_icon='./Resources/Images/Logo_4.png',
     layout='wide',
 )
 
