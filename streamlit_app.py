@@ -48,11 +48,11 @@ def show_pdf(file_path):
 
 
 def run():
-    col1, col2 = st.columns([1, 6])
+    col1, col2 = st.sidebar.columns([1, 3])
     img = Image.open('./Resources/Images/Logo.png')
     img = img.resize((75, 75))
     col1.image(img)
-    col2.title("Human Resource Management")
+    col2.markdown("# Recruit Rank")
 
     st.sidebar.markdown("# Choose User")
     activities = ["User", "Admin"]
@@ -61,7 +61,7 @@ def run():
     user_data_table = st.secrets.connections.mysql.user_data
 
     if choice == 'User':
-        pdf_file = st.file_uploader("Choose your Resume", type=["pdf"])
+        pdf_file = st.file_uploader('Choose your Resume', type=["pdf"])
         if pdf_file is not None:
             save_image_path = "./Uploaded Resumes/" + pdf_file.name
             with open(save_image_path, "wb") as f:
@@ -181,10 +181,8 @@ def run():
             else:
                 st.error('Something went wrong..')
     else:
-        ## Admin Side
-        st.markdown('### Welcome to Admin Portal')
-
         if st.session_state['admin_logged_in'] == False:
+            st.markdown('### Welcome to Admin Portal')
             ad_user = st.text_input("Username")
             ad_password = st.text_input("Password", type='password')
             if st.button('Login'):
@@ -195,29 +193,31 @@ def run():
         else:
             st.success("Welcome Admin")
 
-            st.header("User Data")
-            user_data_df = db.get_user_data(user_data_table)
-            st.dataframe(user_data_df)
+            st.markdown('### Admin Portal')
 
-            st.markdown(get_table_download_link(user_data_df, "user_data.csv", "Download User Data"),
-                        unsafe_allow_html=True)
+            with st.expander(label="User Data", expanded=False):
+                user_data_df = db.get_user_data(user_data_table)
+                st.dataframe(user_data_df)
+
+                st.markdown(get_table_download_link(user_data_df, "user_data.csv", "Download User Data"),
+                            unsafe_allow_html=True)
 
             listing_data_table = st.secrets.connections.mysql.listing_table
 
-            st.header("Listing Data")
-            listing_data_df = db.get_listing_data(listing_data_table)
-            st.dataframe(listing_data_df)
+            with st.expander(label="Listing Data", expanded=False):
+                listing_data_df = db.get_listing_data(listing_data_table)
+                st.dataframe(listing_data_df)
 
-            st.markdown(get_table_download_link(listing_data_df, "listing_data.csv", "Download Listing Data"),
-                        unsafe_allow_html=True)
+                st.markdown(get_table_download_link(listing_data_df, "listing_data.csv", "Download Listing Data"),
+                            unsafe_allow_html=True)
 
             with st.expander(label="Add new listing", expanded=False):
                 job_desc = st.text_input("Job Description")
                 job_res = st.text_input("Job Responsibilities")
                 job_skills = st.text_input("Job Skills")
 
-            if st.button('Add listing'):
-                db.insert_listing_data(listing_data_table, job_desc, job_res, job_skills)
+                if st.button('Add listing'):
+                    db.insert_listing_data(listing_data_table, job_desc, job_res, job_skills)
 
 
 if 'admin_logged_in' not in st.session_state:
@@ -226,8 +226,9 @@ if 'connection_object' not in st.session_state:
     st.session_state['connection_object'] = None
 
 st.set_page_config(
-    page_title="Human Resource Management Portal",
+    page_title="Recruit Rank",
     page_icon='./Resources/Images/Logo.png',
+    layout='wide',
 )
 
 if st.session_state['connection_object'] is None:
@@ -237,9 +238,6 @@ if not db.check_connection():
     connection = db.set_connection()
 cursor = db.set_cursor()
 
-# db.set_database()
-# db.create_database()
-# db.create_user_data_table()
-# db.create_listing_data_table()
+# db.init()
 
 run()

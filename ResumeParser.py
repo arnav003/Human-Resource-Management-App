@@ -99,36 +99,35 @@ def parse_job_desc(desc, model="./Resources/Models/output/model-best"):
     # for ent in doc.ents:
     #     print(ent.text + " -> " + ent.label_)
 
-
 # resume_file = 'Resources/Sample Resumes/IOS1.pdf'
 # text = get_text_from_pdf(resume_file)
 # data_dict, data_str = extract_data(text)
 
-# file = open('job_desc.txt', 'r')
-# desc = file.read()
-# parse_job_desc(desc=desc)
-# file.close()
-#
 # data_lg = extract_data(text, model='en_core_web_lg')
-# file_lg = open("resume_data_lg.txt", 'w')
+# file_lg = open("Resources/Sample Outputs/resume_data_lg.txt", 'w')
 # file_lg.write(data_lg)
 # file_lg.write("\n\nrunning on resume parser model\n\n")
 # data_lg = extract_data(data_lg)
 # file_lg.write(data_lg)
 # file_lg.close()
-#
+
 # data_md = extract_data(text, model='en_core_web_md')
-# file_md = open("resume_data_md.txt", 'w')
+# file_md = open("Resources/Sample Outputs/resume_data_md.txt", 'w')
 # file_md.write(data_md)
 # file_md.write("\n\nrunning on resume parser model\n\n")
 # data_md = extract_data(data_md)
 # file_md.write(data_md)
 # file_md.close()
-#
+
 # data_sm = extract_data(text, model='en_core_web_sm')
-# file_sm = open("resume_data_sm.txt", 'w')
+# file_sm = open("Resources/Sample Outputs/resume_data_sm.txt", 'w')
 # file_sm.write(data_sm)
 # file_sm.write("\n\nrunning on resume parser model\n\n")
 # data_sm = extract_data(data_sm)
 # file_sm.write(data_sm)
 # file_sm.close()
+
+# file = open('Resources/Sample Job Descriptions/job_desc.txt', 'r')
+# desc = file.read()
+# parse_job_desc(desc=desc)
+# file.close()

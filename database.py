@@ -59,10 +59,14 @@ def get_user_data(user_data_table):
                                                    'Phone', 'Skills', 'Resume Score'
                                                    ])
         print("Fetched user data table.")
-        return user_df
     except pymysql.err.OperationalError:
         print("Some error occurred. Unable to fetch user data table.")
-        return None
+        if not check_connection():
+            set_connection()
+
+        user_df = get_user_data(user_data_table)
+
+    return user_df
 
 
 def create_listing_data_table():
@@ -114,10 +118,14 @@ def get_listing_data(listing_data_table):
         listing_data = cursor.fetchall()
         listing_df = pd.DataFrame(listing_data, columns=['Job Description', 'Job Responsibilities', 'Job Skills'])
         print("Fetched listing data table.")
-        return listing_df
     except pymysql.err.OperationalError:
         print("Some error occurred. Unable to fetch listing data table.")
-        return None
+        if not check_connection():
+            set_connection()
+
+        listing_df = get_listing_data(listing_data_table)
+
+    return listing_df
 
 
 def create_database():
@@ -184,3 +192,9 @@ def check_connection():
     else:
         print("Connection broken. Retrying...")
         return False
+
+
+def init():
+    create_database()
+    create_user_data_table()
+    create_listing_data_table()
