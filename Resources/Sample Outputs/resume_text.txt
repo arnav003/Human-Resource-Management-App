@@ -1,105 +1,76 @@
- info@resumekraft.com
-+1-202-555-0135
-New York, US
-linkedin.com/in/sam
-Swift,Objective -c
-Tools: XCode
-FrameWorks: Cccoa Touch
-Data Storage:
-Sqlite,Plist,NSUserDefaults
-ParsingTechniques:XML,JSON
-WebServices: REST, SOAP
-Skills
-New York University of
-Technology
-Aug 2013 - Nov 2017
-Computer Science Engineering
-with aggregate of 6.3%
-The Texas Modal School
-Jun 2011 - May 2013
-Higher Secondary Education
-with an aggregate of 78%
+ Summary
+Passionate second-year student pursuing B.Tech CSE. Experienced in developing various projects using different
+programming languages, frameworks, and tools. Proficient in competitive coding in C++. Strong interest in game
+development and artificial intelligence. Dedicated to learning new technologies and skills to grow my skills.
 Education
-English
-German
-French
-Chines
-Languages
-CCNA (Essentials)
-CCNA (Switching & Routing)
-Certifications
-  4.7 years of experience in developing applications on IOS
-  Work experience in swift programming
-  Decent knowledge MVC Architecture
-  Experience in using SOAP, REST-based Web Services 
-  Good knowledge on push notification integration
-  Experience in App submission to the app store
-  Excellent communication skills 
-  Passionate to secure a challenging position in a reputable
-organization to expand my learnings, knowledge, and skills.
-Summary
-Edu-Tech Solutions LLC Jul 2017 - Present
-iOS Developer
-As a Developer i am responsible in 
-Gathering the requirments
-Create UIDesigns  screens
-Total end-end  development and
-Uploading the app to AppStore
+Manipal University Jaipur | Jaipur, Rajasthan
+B.Tech in Computer Science and Engineering | 07/2026
+Achieved a CGPA of 9.71 in the 1st year.
+Delhi Public School Ranchi | Ranchi, Jharkhand
+Higher Secondary School Certificate [CBSE] | 07/2022
+Completed the course with a score of 89.8%
+St. Thomas School Dhurwa | Ranchi, Jharkhand
+Secondary School Certificate [ICSE] | 07/2020
+Completed the course with a score of 95.2%
+Skills
+Unity, Python, C#, C++, Artificial Intelligence, Machine Learning, Leadership, Teamwork
 Experience
-Developer
-NY Model School IOS App
-Project Details:
-Project Name: NY Model School
-Client: NY Model International Public School
-Role: Developer
-Organization: My Class Board Educational Solutions
-Tools: XCode
-Technologies: IOS -10,Swift
-Project Description: 
-This application is developed to constantly update parents about their
-child school activities also build a parent-teacher association. They can
-check grades, attendance status, assignments, and more. Parents will
-constantly receive alerts regarding the latest announcements,
-pictures, etc. parents will be kept updated with everything that is
-happening at NY Model International Public School
-Developer
-Silver Tune IOS App
- Project Details:
-Project Name: Silver Tune
-Client: Silver Tune
-Role: Developer
-Organization: My Class Board Educational Solutions
-Tools: XCode
-Technologies: IOS -10 swift
+MUJ ACM SIGAI Student Chapter | Jaipur, Rajasthan
+Technical Head | 04/2023 - Present
+Responsible for identifying and prioritizing technical goals for the chapter. Overseeing the implementation of cutting-edge
+programs and projects. Collaborating closely with the talented and dedicated members of the chapter, including the Executive
+Committee.
+Randomize MUJ | Jaipur, Rajasthan
+Event Coordinator | 01/2023 - 04/2023
+Planning and organizing various events and activities, such as workshops, quizzes, etc. Marketing and promoting events and
+activities using various channels and strategies.
+VRPlaying Games
+Game Developer | 09/2022 - 10/2022
+I was responsible for converting pre-existing games written using Cocos2dx with C++ and Javascript to a Unity engine game
+using C#. Took complete ownership of the entire codebase and ensured that the games maintained their original functionality,
+performance, and quality. Implemented new features and enhancements using Unity's tools and frameworks.
+DevTown (ShapeAI)
+Data Analyst Intern | 06/2021 - 08/2021
+Took full ownership of the product life cycle. Understood customer needs through research and market data. Owned and
+shaped the backlog, roadmap, and vision of one cross-functional product team.
 Projects
-Samantha Ru
-I O S  D E V E L O P E R
-Project Name: Silver Tune
-Client: Silver Tune
-Role: Developer
-Organization: My Class Board Educational Solutions
-Tools: XCode
-Technologies: IOS -10, swift
-Project Description:
-This application is developed to constantly update parents about their
-child school activities also build a parent-teacher association. They can
-check grades, attendance status, assignments, and more. Parents will
-constantly receive alerts regarding the latest announcements,
-pictures, etc. parents will be kept updated with everything that is
-happening at Silver Tune
-Developer
-Bring-up International school
-Project Details:
-Project Name: Bring-up International school
-Client: Bring-up International school
-Role: Developer
-Organization: My Class Board Educational Solutions
-Tools: XCode
-Technologies: IOS -10, swift 
-Project Description:
-This application is developed to constantly update parents about their
-child school activities also build a parent-teacher association. They can
-check grades, attendance status, assignments, and more. Parents will
-constantly receive alerts regarding the latest announcements,
-pictures, etc. parents will be kept updated with everything that is
-happening at Bring-up
+Sightscope
+It utilizes cutting-edge artificial intelligence (AI) technology to automatically generate descriptive captions for images.
+Through training an AI model on extensive datasets, we are able to extract visual features and generate meaningful
+descriptions that enhance visual accessibility. Additionally, the potential applications of this project extend beyond enhancing
+visual accessibility and can be utilized in areas such as surveillance and other relevant domains.
+Lala Arnav Vatsal
+8809377988 | arnav.vatsal2213@gmail.com | Jaipur, Rajasthan
+Rainfall Prediction using RandomForest
+It is a rainfall data processing model using Random Forest Regression, an ensemble learning technique that harnesses the
+power of multiple decision trees. It is designed to provide forecasts on precipitation amounts for specific subdivisions within
+the Indian peninsula, for both monthly and yearly intervals.
+Project Silver Valley
+A sci-fi first-person shooter game with complex enemy AI, full-body character animation, and dynamic shooting mechanics. I
+used assets from Unity Asset Store to create a detailed game environment and incorporated APIs and SDKs for login and
+leaderboard functionality.
+Castle Siege
+I designed a third-person multiplayer game with a real-time simulation of thousands of bots. I used advanced networking
+solutions to support seamless multiplayer interactions and implemented a robust system for managing player interactions
+and progress in an open-world environment.
+Attendance Bot
+I developed a bot for video conferencing softwares which used face recognition to mark attendance of the participants, using
+Python and OpenCV library.
+Awards
+Runner up in Datathon
+A data-focused hackathon which involved analyzing large sets of data and developing models or solutions to solve a specific
+problem or challenge.
+Semi-finalist in Toycathon
+A national game-designing competition that challenges India’s innovative minds to conceptualize novel toys and games
+based on Bharatiya civilization, history, culture, mythology, and ethos.
+Silver Medalist in Majlish 
+An interstate sit-and-draw competition held on a specific theme. Aimed at promoting creativity and artistic skills among them.
+Qualified Zonal Informatics Olympiad
+Part of the Indian Computing Olympiad (ICO), it tests students’ knowledge of computer science and programming.
+Community Service
+Fundraiser and Event Organizer
+Youth Empowerment Foundation
+Raised funds to distribute food packets and blankets to help the underprivileged community.
+Health counselor [HIV Project]
+Association of India for National Advancement
+Provided HIV patients motivation and support to promote a healthy mental and physical state.

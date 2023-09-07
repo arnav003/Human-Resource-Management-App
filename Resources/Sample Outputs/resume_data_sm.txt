@@ -1,0 +1,79 @@
+second-year -> DATE
+B.Tech -> ORG
+C++ -> GPE
+9.71 -> CARDINAL
+the 1st year -> DATE
+Delhi Public School Ranchi -> ORG
+Ranchi -> GPE
+Jharkhand -> GPE
+Secondary School Certificate -> ORG
+07/2022
+Completed -> PERSON
+89.8% -> PERCENT
+St. Thomas School Dhurwa -> ORG
+Ranchi -> GPE
+Jharkhand -> GPE
+Secondary School Certificate -> ORG
+95.2% -> PERCENT
+Skills
+Unity -> ORG
+Artificial Intelligence, Machine Learning -> ORG
+SIGAI Student Chapter -> ORG
+Jaipur -> PERSON
+the Executive
+Committee -> ORG
+Randomize -> ORG
+Jaipur -> GPE
+01/2023 - 04/2023 -> CARDINAL
+C++ -> PERSON
+Javascript -> PERSON
+Unity -> ORG
+Unity -> ORG
+DevTown -> PERSON
+06/2021 - 08/2021 -> ORG
+one -> CARDINAL
+Projects
+Sightscope -> ORG
+AI -> ORG
+Lala Arnav Vatsal -> PERSON
+8809377988 -> DATE
+Jaipur -> GPE
+RandomForest -> ORG
+Random Forest Regression -> ORG
+Indian -> NORP
+monthly -> DATE
+Project Silver Valley -> LOC
+first -> ORDINAL
+AI -> ORG
+Unity Asset Store -> ORG
+Castle Siege -> ORG
+third -> ORDINAL
+thousands -> CARDINAL
+Attendance Bot -> PERSON
+Datathon -> GPE
+Toycathon -> ORG
+India -> GPE
+Bharatiya -> ORG
+Silver Medalist -> PERSON
+Majlish -> GPE
+Qualified Zonal Informatics Olympiad -> ORG
+the Indian Computing Olympiad -> ORG
+ICO -> ORG
+Community Service
+ -> ORG
+Youth Empowerment Foundation -> ORG
+Association of India for National Advancement -> ORG
+
+
+running on resume parser model
+
+second-year -> YEARS OF EXPERIENCE
+B.Tech -> ORG -> DEGREE
+C++ -> GPE -> CERTIFICATION
+9.71 -> CARDINAL -> YEARS OF EXPERIENCE
+Jaipur -> GPE -> WORKED AS
+Lala Arnav Vatsal -> PERSON -> YEARS OF EXPERIENCE
+Bharatiya -> LOCATION
+Silver Medalist -> PERSON -> AWARDS
+Youth Empowerment Foundation -> ORG -> CERTIFICATION
+Association of India for National Advancement -> ORG -> CERTIFICATION

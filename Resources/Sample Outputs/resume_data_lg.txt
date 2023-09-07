@@ -1,0 +1,70 @@
+second-year -> DATE
+B.Tech CSE -> ORG
+C++ -> LANGUAGE
+Education
+Manipal University Jaipur | Jaipur -> ORG
+Rajasthan -> GPE
+Computer Science and Engineering -> ORG
+CGPA -> ORG
+9.71 -> CARDINAL
+the 1st year -> DATE
+Delhi Public School Ranchi | Ranchi -> ORG
+Jharkhand -> GPE
+89.8% -> PERCENT
+St. Thomas School Dhurwa | Ranchi -> ORG
+Jharkhand -> GPE
+95.2% -> PERCENT
+Artificial Intelligence -> ORG
+Machine Learning -> ORG
+Jaipur -> GPE
+Rajasthan -> GPE
+the Executive
+Committee -> ORG
+Randomize MUJ | -> PERSON
+Jaipur -> GPE
+Rajasthan
+Event -> EVENT
+C++ -> LANGUAGE
+Javascript -> PRODUCT
+Unity -> ORG
+Unity -> ORG
+DevTown -> PERSON
+06/2021 - 08/2021
+Took -> ORG
+one -> CARDINAL
+AI -> PRODUCT
+Lala Arnav Vatsal -> PERSON
+Jaipur -> GPE
+Rajasthan -> GPE
+RandomForest -> ORG
+Random Forest Regression -> ORG
+Indian -> NORP
+monthly -> DATE
+yearly -> DATE
+Project Silver Valley -> FAC
+first -> ORDINAL
+AI -> PRODUCT
+Unity Asset Store -> ORG
+Castle Siege -> FAC
+third -> ORDINAL
+thousands -> CARDINAL
+Toycathon -> ORG
+India -> GPE
+Bharatiya -> NORP
+Majlish -> GPE
+Qualified Zonal Informatics Olympiad -> ORG
+the Indian Computing Olympiad -> EVENT
+Community Service
+Fundraiser and Event Organizer -> ORG
+Youth Empowerment Foundation -> ORG
+National Advancement
+Provided -> ORG
+
+
+running on resume parser model
+
+second-year -> DATE -> YEARS OF EXPERIENCE
+B.Tech CSE -> ORG -> DEGREE
+Manipal University -> UNIVERSITY
+Computer Science and Engineering -> ORG -> DEGREE
+Youth Empowerment Foundation -> ORG -> CERTIFICATION

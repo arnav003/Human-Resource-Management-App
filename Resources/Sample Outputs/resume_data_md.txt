@@ -1,0 +1,83 @@
+second-year -> DATE
+B.Tech CSE -> ORG
+C++ -> LANGUAGE
+Education
+Manipal University Jaipur | Jaipur -> ORG
+Rajasthan -> GPE
+Computer Science and Engineering | -> ORG
+CGPA -> ORG
+9.71 -> CARDINAL
+the 1st year -> DATE
+Delhi Public School Ranchi | Ranchi -> ORG
+Jharkhand -> GPE
+89.8% -> PERCENT
+St. Thomas School Dhurwa | Ranchi -> ORG
+Jharkhand
+Secondary School Certificate -> ORG
+95.2% -> PERCENT
+Skills
+Unity -> ORG
+Python -> ORG
+C++ -> CARDINAL
+Artificial Intelligence, Machine Learning -> ORG
+Jaipur -> GPE
+Rajasthan
+Technical Head -> ORG
+the Executive
+Committee -> ORG
+Randomize MUJ | -> ORG
+Jaipur -> GPE
+Rajasthan
+Event Coordinator | -> ORG
+C++ -> CARDINAL
+Javascript -> PRODUCT
+Unity -> ORG
+Unity -> ORG
+DevTown -> PERSON
+Data Analyst Intern | -> ORG
+one -> CARDINAL
+AI -> ORG
+Lala Arnav Vatsal
+ -> PERSON
+Jaipur -> GPE
+Rajasthan -> GPE
+RandomForest -> ORG
+Random Forest Regression -> ORG
+Indian -> NORP
+monthly -> DATE
+yearly -> DATE
+first -> ORDINAL
+Unity Asset Store -> ORG
+Castle Siege -> ORG
+third -> ORDINAL
+thousands -> CARDINAL
+Python -> PRODUCT
+Datathon
+A -> ORG
+Toycathon -> ORG
+India -> GPE
+Bharatiya -> ORG
+Majlish -> GPE
+the Indian Computing Olympiad -> EVENT
+Community Service
+Fundraiser and Event Organizer
+Youth Empowerment Foundation -> ORG
+National Advancement
+Provided -> ORG
+
+
+running on resume parser model
+
+second-year -> DATE -> YEARS OF EXPERIENCE
+B.Tech CSE -> ORG -> DEGREE
+C++ -> LANGUAGE -> SKILLS
+Manipal University -> UNIVERSITY
+Rajasthan -> SKILLS
+Computer Science and Engineering -> DEGREE
+Rajasthan -> LOCATION
+Rajasthan -> LOCATION
+Bharatiya -> LANGUAGE
+Majlish -> LANGUAGE
+Community Service -> COMPANIES WORKED AT
+Fundraiser and Event Organizer -> WORKED AS
+Youth Empowerment Foundation -> ORG -> CERTIFICATION

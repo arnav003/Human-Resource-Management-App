@@ -10,24 +10,34 @@ from PIL import Image
 @st.cache_resource
 def get_data(save_image_path):
     text = ResumeParser.get_text_from_pdf(save_image_path)
-    data, _ = ResumeParser.extract_data(text)
+    # data, _ = ResumeParser.extract_data_llama(text)
+    # data = ResumeParser.test_extract_data()
+    data = ResumeParser.extract_data_chatgpt(text)
     return data
 
 
-def print_list_with_text(ls, text, print_list=True):
+def print_list_with_text(value, text, print_list=True):
     out = ""
     if print_list:
         col1, col2 = st.columns([1, 5])
         col1.write(f'{text}: ')
-    if ls is not None:
-        for ele in ls:
-            out = out + ele + "\n"
+    if isinstance(value, list):
+        if value != [] and value[0] != "Not found":
+            for ele in value:
+                out = out + ele + "\n"
+                if print_list:
+                    col2.text(ele)
+        else:
+            out = "Not found."
             if print_list:
-                col2.text(ele)
+                col2.error(f"{text} not found.")
     else:
-        out = "Not found."
+        out = value
         if print_list:
-            col2.error(f"{text} not found.")
+            if value != 'Not found':
+                col2.text(value)
+            else:
+                col2.error(f"{text} not found.")
 
     return out
 
@@ -76,20 +86,24 @@ def run():
                 with st.expander("Extracted Details"):
                     name = print_list_with_text(resume_data['name'], "Name")
                     email = print_list_with_text(resume_data['email'], "Email")
-                    phone = print_list_with_text(resume_data['phone number'], "Phone Number")
+                    phone = print_list_with_text(resume_data['phone_number'], "Phone Number")
                     linkedin = print_list_with_text(resume_data['linkedin'], "LinkedIn")
+                    date_of_birth = print_list_with_text(resume_data["date_of_birth"], "Date of Birth")
+                    address = print_list_with_text(resume_data["address"], "Address")
                     skills = print_list_with_text(resume_data["skills"], "Skills")
-                    degree = print_list_with_text(resume_data["degree"], "Degree")
-                    year_of_graduation = print_list_with_text(resume_data["year of graduation"], "Year of Graduation")
-                    university = print_list_with_text(resume_data["university"], "University")
-                    certification = print_list_with_text(resume_data["certification"], "Certification")
+                    projects = print_list_with_text(resume_data["project_descriptions"], "Projects")
+                    degree = print_list_with_text(resume_data["degrees"], "Degree")
+                    year_of_graduation = print_list_with_text(resume_data["year_of_graduation"], "Year of Graduation")
+                    university = print_list_with_text(resume_data["college_name"], "College")
+                    certification = print_list_with_text(resume_data["certifications"], "Certification")
                     awards = print_list_with_text(resume_data["awards"], "Awards")
-                    worked_as = print_list_with_text(resume_data["worked as"], "Worked As")
-                    companies_worked_at = print_list_with_text(resume_data["companies worked at"],
+                    worked_as = print_list_with_text(resume_data["worked_as"], "Worked As")
+                    companies_worked_at = print_list_with_text(resume_data["companies_worked_at"],
                                                                "Companies Worked At")
-                    years_of_experience = print_list_with_text(resume_data["years of experience"],
+                    research_paper = print_list_with_text(resume_data["research_papers"], "Research Papers")
+                    years_of_experience = print_list_with_text(resume_data["years_of_experience"],
                                                                "Years of Experience")
-                    language = print_list_with_text(resume_data["language"], "Language")
+                    language = print_list_with_text(resume_data["natural_languages"], "Language")
 
                 ts = time.time()
                 cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
@@ -99,7 +113,7 @@ def run():
                 st.subheader("**Resume Analysis**")
                 resume_score = 0
 
-                if resume_data['degree'] is not None or resume_data['university'] is not None:
+                if resume_data['degrees'] is not None or resume_data['college_name'] is not None:
                     resume_score = resume_score + 20
                     st.markdown(
                         '''<h4 style='text-align: left; color: #1ed760;'>
@@ -111,7 +125,7 @@ def run():
                         [-] Please add your Degree.</h4>''',
                         unsafe_allow_html=True)
 
-                if resume_data['worked as'] is not None:
+                if resume_data['worked_as'] is not None:
                     resume_score = resume_score + 20
                     st.markdown(
                         '''<h4 style='text-align: left; color: #1ed760;'>
@@ -123,7 +137,7 @@ def run():
                         [-] Please add your Previous Experiences.</h4>''',
                         unsafe_allow_html=True)
 
-                if resume_data['companies worked at'] is not None:
+                if resume_data['companies_worked_at'] is not None:
                     resume_score = resume_score + 20
                     st.markdown(
                         '''<h4 style='text-align: left; color: #1ed760;'>
@@ -147,7 +161,7 @@ def run():
                         [-] Please add your Skills.</h4>''',
                         unsafe_allow_html=True)
 
-                if resume_data['years of experience'] is not None:
+                if resume_data['years_of_experience'] is not None:
                     resume_score = resume_score + 20
                     st.markdown(
                         '''<h4 style='text-align: left; color: #1ed760;'>
