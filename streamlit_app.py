@@ -8,32 +8,51 @@ from PIL import Image
 
 
 @st.cache_resource
-def get_data(save_image_path):
-    text = ResumeParser.get_text_from_pdf(save_image_path)
-    # data, _ = ResumeParser.extract_data_llama(text)
-    # data = ResumeParser.test_extract_data()
-    data = ResumeParser.extract_data_chatgpt(text)
-    return data
+def get_resume_text(path):
+    text = ResumeParser.get_text_from_pdf(path)
+    return text
 
 
-def print_list_with_text(value, text, print_list=True):
+@st.cache_resource
+def get_data(text):
+    data_str, data_json = ResumeParser.extract_data_chatgpt(text)
+    return data_str, data_json
+
+
+@st.cache_resource
+def get_questions(data):
+    data_str, data_json = ResumeParser.generate_questions_chatgpt(data)
+    try:
+        questions = data_json['questions']
+    except TypeError:
+        questions = None
+    return data_str, questions
+
+
+@st.cache_resource
+def get_analyis(text, job_desc):
+    data_str, data_json = ResumeParser.analyze_resume_chatgpt(text, job_desc)
+    return data_str, data_json
+
+
+def get_detail(value, text, is_display=True):
     out = ""
-    if print_list:
+    if is_display:
         col1, col2 = st.columns([1, 5])
         col1.write(f'{text}: ')
     if isinstance(value, list):
         if value != [] and value[0] != "Not found":
             for ele in value:
                 out = out + ele + "\n"
-                if print_list:
+                if is_display:
                     col2.text(ele)
         else:
             out = "Not found."
-            if print_list:
+            if is_display:
                 col2.error(f"{text} not found.")
     else:
         out = value
-        if print_list:
+        if is_display:
             if value != 'Not found':
                 col2.text(value)
             else:
@@ -53,7 +72,8 @@ def show_pdf(file_path):
     with open(file_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
     pdf_display = F'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
-    with st.expander("Show CV"):
+    st.subheader("**Uploaded Resume**")
+    with st.expander("Show Resume"):
         st.markdown(pdf_display, unsafe_allow_html=True)
 
 
@@ -71,39 +91,45 @@ def run():
     user_data_table = st.secrets.connections.mysql.user_data
 
     if choice == 'User':
-        pdf_file = st.file_uploader('Choose your Resume', type=["pdf"])
+        pdf_file = st.sidebar.file_uploader('Choose your Resume', type=["pdf"])
         if pdf_file is not None:
-            save_image_path = "./Uploaded Resumes/" + pdf_file.name
-            with open(save_image_path, "wb") as f:
+            pdf_file_path = "./Uploaded Resumes/" + pdf_file.name
+            with open(pdf_file_path, "wb") as f:
                 f.write(pdf_file.getbuffer())
-            resume_data = get_data(save_image_path)
+
+            text = get_resume_text(pdf_file_path)
+            _, resume_data = get_data(text)
 
             if resume_data:
-                st.header("Hello, " + print_list_with_text(resume_data['name'], "Name", print_list=False))
+                st.header("Hello, " + get_detail(resume_data['name'], "Name", False))
 
-                show_pdf(save_image_path)
+                st.markdown('''---''')
 
-                with st.expander("Extracted Details"):
-                    name = print_list_with_text(resume_data['name'], "Name")
-                    email = print_list_with_text(resume_data['email'], "Email")
-                    phone = print_list_with_text(resume_data['phone_number'], "Phone Number")
-                    linkedin = print_list_with_text(resume_data['linkedin'], "LinkedIn")
-                    date_of_birth = print_list_with_text(resume_data["date_of_birth"], "Date of Birth")
-                    address = print_list_with_text(resume_data["address"], "Address")
-                    skills = print_list_with_text(resume_data["skills"], "Skills")
-                    projects = print_list_with_text(resume_data["project_descriptions"], "Projects")
-                    degree = print_list_with_text(resume_data["degrees"], "Degree")
-                    year_of_graduation = print_list_with_text(resume_data["year_of_graduation"], "Year of Graduation")
-                    university = print_list_with_text(resume_data["college_name"], "College")
-                    certification = print_list_with_text(resume_data["certifications"], "Certification")
-                    awards = print_list_with_text(resume_data["awards"], "Awards")
-                    worked_as = print_list_with_text(resume_data["worked_as"], "Worked As")
-                    companies_worked_at = print_list_with_text(resume_data["companies_worked_at"],
-                                                               "Companies Worked At")
-                    research_paper = print_list_with_text(resume_data["research_papers"], "Research Papers")
-                    years_of_experience = print_list_with_text(resume_data["years_of_experience"],
-                                                               "Years of Experience")
-                    language = print_list_with_text(resume_data["natural_languages"], "Language")
+                show_pdf(pdf_file_path)
+
+                st.subheader("**Resume Details**")
+
+                with st.expander("Show Details"):
+                    name = get_detail(resume_data['name'], "Name")
+                    email = get_detail(resume_data['email'], "Email")
+                    phone = get_detail(resume_data['phone_number'], "Phone Number")
+                    linkedin = get_detail(resume_data['linkedin'], "LinkedIn")
+                    date_of_birth = get_detail(resume_data["date_of_birth"], "Date of Birth")
+                    address = get_detail(resume_data["address"], "Address")
+                    skills = get_detail(resume_data["skills"], "Skills")
+                    projects = get_detail(resume_data["project_descriptions"], "Projects")
+                    degree = get_detail(resume_data["degrees"], "Degree")
+                    year_of_graduation = get_detail(resume_data["year_of_graduation"], "Year of Graduation")
+                    university = get_detail(resume_data["college_name"], "College")
+                    certification = get_detail(resume_data["certifications"], "Certification")
+                    awards = get_detail(resume_data["awards"], "Awards")
+                    worked_as = get_detail(resume_data["worked_as"], "Worked As")
+                    companies_worked_at = get_detail(resume_data["companies_worked_at"],
+                                                     "Companies Worked At")
+                    research_paper = get_detail(resume_data["research_papers"], "Research Papers")
+                    years_of_experience = get_detail(resume_data["years_of_experience"],
+                                                     "Years of Experience")
+                    language = get_detail(resume_data["natural_languages"], "Language")
 
                 ts = time.time()
                 cur_date = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d')
@@ -111,85 +137,50 @@ def run():
                 timestamp = str(cur_date + '_' + cur_time)
 
                 st.subheader("**Resume Analysis**")
-                resume_score = 0
 
-                if resume_data['degrees'] is not None or resume_data['college_name'] is not None:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>
-                        [+] Awesome! You have added your Degree.</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>
-                        [-] Please add your Degree.</h4>''',
-                        unsafe_allow_html=True)
+                with st.expander(label='Show Analysis'):
+                    job_desc_file_path = "./Resources/Sample Job Descriptions/job_desc_1.txt"
+                    with open(job_desc_file_path, "r") as f:
+                        job_desc = f.read()
 
-                if resume_data['worked_as'] is not None:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>
-                        [+] Awesome! You have added your Previous Experiences.</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>
-                        [-] Please add your Previous Experiences.</h4>''',
-                        unsafe_allow_html=True)
+                    _, analysis = get_analyis(text, job_desc)
 
-                if resume_data['companies_worked_at'] is not None:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>
-                        [+] Awesome! You have added your Previous Employers.</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>
-                        [-] Please add your Previous Employers.</h4>''',
-                        unsafe_allow_html=True)
+                    resume_score = 0
+                    for i, score in enumerate(analysis['scores']):
+                        resume_score = resume_score + score
+                        st.markdown(f'''{i + 1}. {analysis['reasons'][i]}''')
+                        if score > 6:
+                            st.success(f'''Score: {score}''')
+                        else:
+                            st.warning(f'''Score: {score}''')
 
-                if resume_data['skills'] is not None:
-                    resume_score = resume_score + 20
+                    st.subheader("**Resume Score**")
                     st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>
-                        [+] Awesome! You have added your Skills.</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>
-                        [-] Please add your Skills.</h4>''',
-                        unsafe_allow_html=True)
+                        """
+                        <style>
+                            .stProgress > div > div > div > div {
+                                background-color: #d73b5c;
+                            }
+                        </style>""",
+                        unsafe_allow_html=True,
+                    )
+                    my_bar = st.progress(0)
+                    score = 0
+                    max_score = 60
+                    score_percent = (int)((resume_score / max_score) * 100)
+                    for percent_complete in range(score_percent):
+                        score += 1
+                        time.sleep(0.01)
+                        my_bar.progress(percent_complete + 1)
+                    st.success(f'**Your Resume Score: {str(resume_score)} / {str(max_score)}**')
 
-                if resume_data['years_of_experience'] is not None:
-                    resume_score = resume_score + 20
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #1ed760;'>
-                        [+] Awesome! You have added your Years of Experience.</h4>''',
-                        unsafe_allow_html=True)
-                else:
-                    st.markdown(
-                        '''<h4 style='text-align: left; color: #fabc10;'>
-                        [-] Please add your Years of Experience.</h4>''',
-                        unsafe_allow_html=True)
-
-                st.subheader("**Resume Score**")
-                st.markdown(
-                    """
-                    <style>
-                        .stProgress > div > div > div > div {
-                            background-color: #d73b5c;
-                        }
-                    </style>""",
-                    unsafe_allow_html=True,
-                )
-                my_bar = st.progress(0)
-                score = 0
-                for percent_complete in range(resume_score):
-                    score += 1
-                    time.sleep(0.01)
-                    my_bar.progress(percent_complete + 1)
-                st.success('**Your Resume Score: ' + str(score) + '**')
+                st.subheader("**Interview Questions**")
+                with st.expander(label="Show Questions"):
+                    _, questions = get_questions(resume_data)
+                    answers = []
+                    for question in questions:
+                        answer = st.text_input(label=f'{question}?')
+                        answers.append(answer)
 
                 db.insert_user_data(user_data_table, timestamp, name, email, linkedin, phone, skills, str(resume_score))
             else:
@@ -242,7 +233,7 @@ if 'connection_object' not in st.session_state:
 st.set_page_config(
     page_title="Recruit Ranker",
     page_icon='./Resources/Images/Logo_4.png',
-    layout='wide',
+    layout='centered',
 )
 
 if st.session_state['connection_object'] is None:

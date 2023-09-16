@@ -1,0 +1,22 @@
+We are seeking a highly motivated and talented Machine Learning Engineer Intern to join our dynamic team at Hurrey, Bengaluru.
+This internship offers a unique opportunity to work on cutting-edge machine learning projects and gain hands-on experience in data science and analytics.
+
+Responsibilities
+- Research, modify, and apply data science and data analytics prototypes.
+- Create and construct methods and plans for machine learning.
+- Employ test findings to perform statistical analysis and improve models.
+- Search the internet for readily available training datasets.
+- Train and retrain ML systems and models as necessary.
+- Improve and expand current ML frameworks and libraries.
+- Develop machine learning applications in accordance with client or customer needs.
+- Investigate, test, and implement appropriate ML tools and algorithms.
+- Evaluate the application cases and problem-solving potential of ML algorithms, ranking them by success likelihood.
+- Gain insights from data exploration and visualization, identifying discrepancies in data distribution that may impact model effectiveness in practical situations.
+
+Requirements
+- Currently pursuing a Bachelor's or Master's degree in Computer Science, Data Science, or a related field.
+- Strong interest in machine learning, data science, and analytics.
+- Basic knowledge of machine learning frameworks and libraries.
+- Proficiency in programming languages such as Python or R.
+- Excellent problem-solving and analytical skills.
+- Strong communication and teamwork abilities.
